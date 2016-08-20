@@ -1,0 +1,13 @@
+*.pyc
+*.pypirc
+*.py~
+/bin
+/local
+/lib
+/include
+*.json
+*.*~
+*.sqlite3
+*/local.py
+
+

@@ -1,0 +1,118 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}{{ category_name }}{% endblock %}
+
+{% block body_block %}
+<div calss="row">
+<div class="col-md-6 col-lg-4">
+
+{% if user.is_authenticated %}
+<h3> Your Profile </h3>
+<h4>Name :{{user.username}}</h4>
+<h4>Email: {{user.email}}</h4>
+<h4>Joined: {{user.date_joined}}</h4>
+{# <h3><a href="/main/edit_profile"><span class="label label-default">click to edit</span></a></h3>'''#}
+<h3><a href="/main/fin_register"><span class="label label-default">Finish Registration</span></a></h3>
+</div>
+<div class="col-md-6 col-lg-8">
+
+
+
+<h3>YOUR ENTRIES</h3>
+
+
+
+ {% if categories %}
+            
+                
+                
+
+		<table class="table table-striped">
+			<caption>Your listings</caption>
+				<thead>
+					<tr>
+				<th>Name</th>
+				<th>Room </th>
+				<th>Price</th>
+				<th>description</th>
+				<th>t-created</th>
+				<th>conditions</th>
+				<th>Town</th>
+				<th>Mtaa</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for category in categories %}
+					
+					<tr>
+					
+					<td>{{ category.name}}</td>
+					<td>{{ category.room }} </td>
+					<td> {{ category.price }} </td>
+					<td>{{ category.property_type}}</td>
+					<td>{{ category.created_at}}</td>
+					<td>{{ category.property_description}}</td>
+					<td>{{ category.property_location}}</td>
+					<td>{{ category.area }} </td>
+					</tr>
+					{% endfor %}
+					</tbody>
+						</table>
+
+
+{% if categories.has_other_pages %}
+<div class="pagination text-center">
+  <ul class="pagination ">
+    {% if categories.has_previous %}
+      <li><a href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in categories.paginator.page_range %}
+      {% if users.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if categories.has_next %}
+      <li><a href="?page={{ users.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
+
+
+
+
+			
+
+
+                
+            
+        {% else %}
+            <strong>You have no entries in yuor todo-list</strong>
+		
+        {% endif %}
+
+
+
+
+
+
+
+<h3><a href="/main/post"><span class="label label-default">add entries</span></a></h3>
+
+{% else %}
+login first
+{% endif %}
+
+</div>
+
+
+</div>
+   
+
+{% endblock %}

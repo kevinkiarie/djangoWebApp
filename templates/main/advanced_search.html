@@ -1,0 +1,299 @@
+
+{% extends 'registration/base.html' %}
+
+{% block title_block %} Search {{ request.GET.search_key }}{% endblock %}
+
+{% block body_block %}
+<div class="container-fluid">
+<div calss="row">
+<div class="col-md-6 col-lg-3">
+
+	<div class="service-box">
+<div class="row">
+<img src="/static/img/portfolio/1.jpg" class="img-responsive img-circle text-center" alt="" width=150 height=150>
+              <h3>Okoa Rent</h3>
+              <p class="text-muted">Usikubali kufungiwa nyumba!</br>Okoa Rent Lipa Baadaye</p>
+</br>
+              </div>
+              <div class="row">
+             <img src="/static/img/portfolio/3.jpg" class="img-responsive img-circle small" alt="" width=150 height=150>
+              <h3>Buy New Furniture</h3>
+              <p class="text-muted">Furniture that suits your taste</br>Locally made and imported furniture</p>
+	</br>
+		</div>
+<div class="row">
+<img src="/static/img/portfolio/2.jpg" class="img-responsive img-circle small" alt="" width=150 height=150>
+              <h3>Buy Old Furniture</h3>
+              <p class="text-muted">Furniture is well maintained and serviced</br> At an affordable Price!</p>
+</div>
+            </div>
+
+
+</div>
+<div class="col-md-6 col-lg-9">
+{% if results %}
+
+<div class="row">
+<h3 class="text-left"><strong>Search results for {{request.GET.search_key}}</strong></h3>
+<div id="myCarousel" class="carousel slide text-primary" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="static/img/portfolio/1.jpg" alt="Filter your results better">          
+        </div>
+        <div class="item">
+          <img src="static/img/portfolio/2.jpg" alt="Second slide">
+        </div>
+        <div class="item">
+          <img src="static/img/portfolio/3.jpg" alt="Third slide">
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+	
+	 <div class="search">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-1">
+              <div class="form-section">
+                <div class="row">
+                    <form role="form" action="/main/filtersearch">
+			 {% csrf_token %}
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="sr-only text-info" for="location">Location</label>
+		<input type="text" class="form-control" name="search_key" id="location" placeholder="town">
+                        </div>
+                      </div>
+			<div class="col-md-2">
+                        <div class="form-group">
+                          <label class="sr-only text-info" for="location">Mtaa</label>
+		<input type="text" class="form-control" name="area" id="search_key" placeholder="Mtaa">
+                        </div>
+                      </div>
+
+
+			
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="sr-only text-info" for="agent">Agent</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control" name="agent" id="agent" placeholder="agent">
+                            
+                          </div>
+                        </div>
+                      </div>
+                      
+
+
+
+
+
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="sr-only" for="guest">Type</label>
+			  <select id="guest" name="typ" class="form-control">
+                              
+				<option value="">ANY</option>
+				<option value="single">SINGLE</option>
+                              <option value="double">DOUBLE</option>
+                              <option value="bedsitter">BEDSITTER</option>
+                              <option value="shop">SHOP</option>
+                              <option value="self_contained">SELF_CONTAINED</option>
+                              <option value="club">CLUB</option>
+				<option value="factory">FACTORY</option>
+                         <option value="office">OFFICE</option>
+                              <option value="warehouse">WAREHOUSE</option>
+				<option value="kitchen">KITCHEN</option>
+                          </select>
+                        </div>
+                      </div>
+			
+
+
+                      <div class="col-md-1">
+                        <button type="submit" class="btn btn-default btn-primary">Search</button>
+                      </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+ {% for entry in results %}
+		<div class="col-md-6 col-lg-4">
+<img src="" alt="preview picture">
+</div>
+<div class="col-md-6 col-lg-8">
+		<h5>Agent name:<a href="/main/profile"> {{ entry.owner.username }}</a></h5>
+                <h5>Posted by:<a href="/main/profile"> {{ entry.owner }}</a></h5>
+		<h5>Posted at: {{ entry.created_at }}</h5>
+		<h5>Phone:<a href="/main/profile"> {{entry.owner.telephone }}</a> </h5>
+	<h5>Description: {{ entry.property_type }}</h5>
+	<h5>Price: {{ entry.price }}</h5>
+	<h5>Location: {{ entry.property_location}}</h5>
+	<h5>Mtaa: {{ entry.area}}</h5>
+	<h5>Current Conditions: {{ entry.property_description }}</h5></br></br>
+                
+                
+</div>
+		
+		{% endfor %}
+					
+
+<div class="row text-center">
+{% if results.has_other_pages %}
+<div class="pagination">
+  <ul class="pagination ">
+    {% if results.has_previous %}
+      <li><a href="?page={{ users.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in results.paginator.page_range %}
+      {% if users.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor%}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if results.has_next %}
+      <li><a href="?page={{ users.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div></div>
+{% endif %}
+</div>
+</div>
+{% else %}
+<div class="row">
+<div id="myCarousel" class="carousel slide text-primary" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="static/img/portfolio/1.jpg" alt="Filter your results better">          
+        </div>
+        <div class="item">
+          <img src="static/img/portfolio/2.jpg" alt="Second slide">
+        </div>
+        <div class="item">
+          <img src="static/img/portfolio/3.jpg" alt="Third slide">
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+	
+	 <div class="search">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-1">
+              <div class="form-section">
+                <div class="row">
+                     <form role="form" action="/main/filtersearch">
+			 {% csrf_token %}
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="sr-only text-info" for="location">Location</label>
+		<input type="text" class="form-control" name="search_key" id="search_key" placeholder="town">
+                        </div>
+                      </div>
+			<div class="col-md-2">
+                        <div class="form-group">
+                          <label class="sr-only text-info" for="location">Mtaa</label>
+		<input type="text" class="form-control" name="area" id="search_key" placeholder="Mtaa">
+                        </div>
+                      </div>
+
+
+
+
+
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="sr-only text-info" for="agent">Agent</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control" name="agent" id="agent" placeholder="agent">
+                            
+                          </div>
+                        </div>
+                      </div>
+                   
+
+
+
+
+
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="sr-only" for="guest">Type</label>
+			  <select id="guest" name="typ" class="form-control">
+                              
+				<option value="">ANY</option>
+				<option value="single">SINGLE</option>
+                              <option value="double">DOUBLE</option>
+                              <option value="bedsitter">BEDSITTER</option>
+                              <option value="shop">SHOP</option>
+                              <option value="self_contained">SELF_CONTAINED</option>
+                              <option value="club">CLUB</option>
+				<option value="factory">FACTORY</option>
+                         <option value="office">OFFICE</option>
+                              <option value="warehouse">WAREHOUSE</option>
+				<option value="kitchen">KITCHEN</option>
+                          </select>
+                        </div>
+                      </div>
+			
+
+
+                      <div class="col-md-1">
+                        <button type="submit" class="btn btn-default btn-primary">Search</button>
+                      </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+ <h3><strong> No results found for {{request.GET.search_key}} </strong></h3>
+
+</div>
+{% endif %} 
+     
+
+
+
+
+</div>
+   
+</div>
+{% endblock %}

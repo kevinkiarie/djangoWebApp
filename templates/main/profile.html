@@ -1,0 +1,38 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}{{ category_name }}{% endblock %}
+
+{% block body_block %}
+<div calss="row">
+<div class="col-md-6 col-lg-4">
+
+</div>
+<div class="col-md-6 col-lg-4">
+
+
+
+
+
+
+
+ {% if user %}
+<h4> User Deatils </h4>
+ <h5> {{user.email}}</h5>
+<h5>{{ user.name }} </h5>
+<h5> {{ user.phone }} </h5>
+ 
+{% endif %}           
+                
+                
+
+		
+</div>
+<div class="col-md-6 col-lg-4">
+<h3></h3>
+
+</div>
+
+</div>
+   
+
+{% endblock %}

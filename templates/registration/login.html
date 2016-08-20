@@ -1,0 +1,53 @@
+{% extends 'registration/base.html' %}
+
+
+{% block body_block %}
+<div class="row">
+<div class="col-md-6 col-lg-4">
+</div>
+
+<div class="col-md-6 col-lg-4">
+{% if user.is_authenticated %}
+	<p>you are already logged in</p>
+{% else %}
+        <h1>Login</h1>
+
+        <form class="form-inline align-center" role="form" id="login_form" method="post" action="/main/login/">
+	{% csrf_token %}
+	<div class="form-group">
+        <label class=sr-only" for="name">Email:</label>
+	</br>
+ <input type="text" class="form-control form-control-lg" name="email" value="" size="50"  placeholder="email"/>
+
+	</div>
+	</br>
+	</br>
+	<div class="form-group">
+	<label for="inputPassword" class="col-sm-2 control-label">Password</label>
+</br>
+        <div class="col-sm-10">
+        <input type="password" class = "form-control" id="inputpassword" placeholder="password" name="password" value="" size="50" />
+
+        <br />
+	</br>
+
+            <input class="btn btn-primary" type="submit" name="submit" value="Login"/>
+        </form>
+</div>
+
+<div>
+</br>
+</br>
+</br>
+</br>
+</br>
+<p> Don't have an account register <a  class="page-scroll" href="/main/register/"><span class="label label-default">here</span></a></p>
+<p>Forgotten password<a  class="page-scroll" href="/main/user/password/reset/"><span class="label label-default">Reset</span></a></p>
+{% endif %}
+
+</div>
+
+<div class="col-md-6 col-lg-4">
+</div>
+</div>
+{% endblock %}

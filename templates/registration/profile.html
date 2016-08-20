@@ -1,0 +1,36 @@
+{% extends 'registration/base.html' %}
+
+{% block body_block %}
+
+
+<div class="row">
+
+<div class="col-md-6 col-lg-4">
+</div>
+
+<div class="col-md-6 col-lg-4">
+
+{% if user.is_authenticated %}
+
+<div class="hero-unit">
+   
+
+
+
+    <br />
+	<h2>your profile </h2>
+    
+	<h3> Name:<span class="label label-default"> {{user.username}}</span> </h3>
+	<h3>Name: <span class="label label-default"> {{user.email}}</span></h3>
+	
+        
+	<p><a href="main/home"> <span class="label label-default">click here </span></a> to see your todos </p>
+        
+  {% endif %}
+</div>
+</div>
+<div class="col-md-6 col-lg-4">
+</div>
+</div>
+
+{% endblock %}

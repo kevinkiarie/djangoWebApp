@@ -1,0 +1,43 @@
+
+{% extends 'registration/base.html' %}
+{% block body_block %}
+
+{% load crispy_forms_tags %}
+
+<div class="row">
+
+<div class="col-md-6 col-lg-4">
+
+
+
+
+
+</div>
+
+<div class="col-md-6 col-lg-4">
+        {% if registered %}
+		{% if user.is_authenticated %}
+	<h3>hellow {{user.username}}</h3>
+        <p>You are now registered.</p>
+		{% else %}
+			login first
+		{% endif %}
+	<p><a href="/main/home"> click here </a> to see your todos </p>
+        {% else %}
+<h3>Register with Kondisha</h3>
+    <br />
+	<div class="form-group">
+        <form class="form-inline" role="form"  id="user_form" method="post" action="/main/register/">
+            {% csrf_token %}
+           {% crispy user_form user_form.helper %}
+        </form>
+	</div>
+        {% endif %}
+    </div>
+</div>
+</div>
+<div class="col-md-6 col-lg-4">
+</div>
+</div>
+
+{% endblock %}
