@@ -97,14 +97,11 @@ WSGI_APPLICATION = 'kondisha.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Kondishadb',
-	'USER': 'kevin', 
-	'PASSWORD': 'my_django@#123#',
-	'HOST':'localhost',
-	'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 #DJANGO-PASSWORDS-VALIDATORS
 AUTH_PASSWORD_VALIDATORS = [
